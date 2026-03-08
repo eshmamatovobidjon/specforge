@@ -136,20 +136,27 @@ fi
 
 # ── Optional: GitHub Copilot instructions ─────────────────────────────────────
 printf '\n'
-COPILOT_SRC="${SDD_DIR}/../.github/copilot-instructions.md"
+COPILOT_SRC="$(cd "${SDD_DIR}/.." && pwd)/.github/copilot-instructions.md"
 COPILOT_DST="${PROJECT_ROOT}/.github/copilot-instructions.md"
 
-printf '  Set up GitHub Copilot instructions? (y/n): '
-read -r INSTALL_COPILOT
-
-if [[ "${INSTALL_COPILOT}" =~ ^[Yy]$ ]]; then
-  if [[ -f "${COPILOT_SRC}" ]]; then
-    mkdir -p "${PROJECT_ROOT}/.github"
-    cp "${COPILOT_SRC}" "${COPILOT_DST}"
-    print_ok "Copilot instructions installed → .github/copilot-instructions.md"
-  else
-    print_warn ".github/copilot-instructions.md source not found."
-    print_warn "Copilot instructions were not installed."
+# Skip prompt entirely if source and destination are the same resolved path
+# (happens when SpecForge is installed at the project root — SDD_DIR/../.github IS .github)
+if [[ -f "${COPILOT_SRC}" && "${COPILOT_SRC}" -ef "${COPILOT_DST}" ]]; then
+  print_ok "Copilot instructions already in place → .github/copilot-instructions.md"
+elif [[ -f "${COPILOT_DST}" ]]; then
+  print_warn "Copilot instructions already exist → .github/copilot-instructions.md (not overwriting)"
+else
+  printf '  Set up GitHub Copilot instructions? (y/n): '
+  read -r INSTALL_COPILOT || INSTALL_COPILOT="n"
+  if [[ "${INSTALL_COPILOT}" =~ ^[Yy]$ ]]; then
+    if [[ -f "${COPILOT_SRC}" ]]; then
+      mkdir -p "${PROJECT_ROOT}/.github"
+      cp "${COPILOT_SRC}" "${COPILOT_DST}"
+      print_ok "Copilot instructions installed → .github/copilot-instructions.md"
+    else
+      print_warn ".github/copilot-instructions.md source not found."
+      print_warn "Copilot instructions were not installed."
+    fi
   fi
 fi
 
