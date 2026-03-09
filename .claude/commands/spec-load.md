@@ -6,7 +6,7 @@
 # Usage: /spec-load <spec-id>
 # Example: /spec-load freight-matching
 
-You are about to implement a spec-driven task using SpecForge.
+You are about to implement a spec-driven task using SpecPact.
 The spec-id you are working with is: **$ARGUMENTS**
 
 Follow these steps exactly, in order. Do not skip any step.
@@ -73,7 +73,7 @@ Do not begin implementation yet.
 
 ```
 ─────────────────────────────────────────
-SpecForge: context loaded
+SpecPact: context loaded
 ─────────────────────────────────────────
 Spec:    [title from spec front matter]
 ID:      $ARGUMENTS

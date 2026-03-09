@@ -1,4 +1,4 @@
-# SpecForge: System Mode
+# SpecPact: System Mode
 # ─────────────────────────────────────────────────────────────────────────────
 # This file defines how you operate when working on a system-mode spec.
 # System mode is for: architectural changes, new services, data model overhauls,

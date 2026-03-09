@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # =============================================================================
-# SpecForge — init.sh
+# SpecPact — init.sh
 # One-time project setup. Run once from your project root after copying .sdd/.
 #
 # Usage: .sdd/scripts/init.sh
@@ -16,7 +16,7 @@ PROJECT_ROOT="$(cd "${SDD_DIR}/.." && pwd)"
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
 print_header() {
-  printf '\n  SpecForge init\n'
+  printf '\n  SpecPact init\n'
   printf '  %s\n\n' "────────────────────────────────────────"
 }
 
@@ -129,7 +129,7 @@ if [[ "${INSTALL_CLAUDE}" =~ ^[Yy]$ ]]; then
     cp "${CLAUDE_COMMANDS_SRC}"/*.md "${CLAUDE_COMMANDS_DST}/" 2>/dev/null || true
     print_ok "Claude Code commands installed → .claude/commands/"
   else
-    print_warn ".claude/commands/ source not found in the SpecForge repo."
+    print_warn ".claude/commands/ source not found in the SpecPact repo."
     print_warn "Claude Code commands were not installed."
   fi
 fi
@@ -140,7 +140,7 @@ COPILOT_SRC="$(cd "${SDD_DIR}/.." && pwd)/.github/copilot-instructions.md"
 COPILOT_DST="${PROJECT_ROOT}/.github/copilot-instructions.md"
 
 # Skip prompt entirely if source and destination are the same resolved path
-# (happens when SpecForge is installed at the project root — SDD_DIR/../.github IS .github)
+# (happens when SpecPact is installed at the project root — SDD_DIR/../.github IS .github)
 if [[ -f "${COPILOT_SRC}" && "${COPILOT_SRC}" -ef "${COPILOT_DST}" ]]; then
   print_ok "Copilot instructions already in place → .github/copilot-instructions.md"
 elif [[ -f "${COPILOT_DST}" ]]; then
@@ -163,7 +163,7 @@ fi
 # ── Summary ───────────────────────────────────────────────────────────────────
 printf '\n'
 printf '  %s\n' "────────────────────────────────────────"
-print_ok "SpecForge initialised for: ${PROJECT_NAME}"
+print_ok "SpecPact initialised for: ${PROJECT_NAME}"
 printf '\n'
 print_info "Next steps:"
 print_info "  1. Complete .sdd/memory/AGENTS.md — fill in stack, principles, conventions"

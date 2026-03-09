@@ -5,7 +5,7 @@ mode: nano
 status: stable
 created: 2026-01-22
 updated: 2026-01-22
-author: specforge-core
+author: specpact-core
 ---
 
 # Fix /health returning 200 when database is unreachable

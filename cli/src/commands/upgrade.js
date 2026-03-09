@@ -1,5 +1,5 @@
 /**
- * upgrade.js — specforge upgrade
+ * upgrade.js — specpact upgrade
  *
  * Compares the .sdd/scripts/ and .sdd/modes/ directories in the current
  * project against the versions bundled in the installed CLI package.
@@ -34,7 +34,7 @@ const pkg = JSON.parse(
 );
 
 /**
- * Handler for `specforge upgrade [--dry-run] [--yes]`.
+ * Handler for `specpact upgrade [--dry-run] [--yes]`.
  *
  * @param {object} options
  * @param {boolean} options.dryRun
@@ -46,7 +46,7 @@ export async function upgradeCommand(options) {
 
   // ─── Guard: .sdd/ must exist ──────────────────────────────────────────────
   if (!existsSync(join(projectRoot, '.sdd'))) {
-    err('.sdd/ not found. Run `specforge init` first.');
+    err('.sdd/ not found. Run `specpact init` first.');
     process.exit(1);
   }
 
@@ -64,7 +64,7 @@ export async function upgradeCommand(options) {
   // ─── Version header ───────────────────────────────────────────────────────
   spacer();
   if (installedVersion === 'unknown') {
-    warn('No version stamp found in .sdd/.specforge-version');
+    warn('No version stamp found in .sdd/.specpact-version');
     hint('  This project may have been installed before versioning was added.');
     hint(`  Bundled version: v${bundledVersion}`);
   } else if (installedVersion === bundledVersion) {

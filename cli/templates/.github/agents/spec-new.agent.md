@@ -1,5 +1,5 @@
 ---
-description: Guided interview to create a new SpecForge spec file without requiring shell script access.
+description: Guided interview to create a new SpecPact spec file without requiring shell script access.
 ---
 
 ## User Input

@@ -1,5 +1,5 @@
 /**
- * list.js — specforge list
+ * list.js — specpact list
  *
  * Lists all specs in .sdd/specs/ with ANSI colour by status.
  * Full Node.js reimplementation of .sdd/scripts/list-specs.sh — no shell exec.
@@ -61,7 +61,7 @@ function col(str, width) {
 }
 
 /**
- * Handler for `specforge list`.
+ * Handler for `specpact list`.
  */
 export function listCommand() {
   const projectRoot = resolve(process.cwd());
@@ -70,7 +70,7 @@ export function listCommand() {
   // ─── Guard: .sdd/specs/ must exist ───────────────────────────────────────
   if (!existsSync(specsDir)) {
     err('No specs directory found at .sdd/specs/');
-    hint('Run `specforge init` first, then `specforge new nano <spec-id>` to create a spec.');
+    hint('Run `specpact init` first, then `specpact new nano <spec-id>` to create a spec.');
     process.exit(1);
   }
 
@@ -107,7 +107,7 @@ export function listCommand() {
   // ─── Rows ─────────────────────────────────────────────────────────────────
   if (entries.length === 0) {
     spacer();
-    hint("No specs found. Run 'specforge new nano <spec-id>' to create your first spec.");
+    hint("No specs found. Run 'specpact new nano <spec-id>' to create your first spec.");
     spacer();
     return;
   }

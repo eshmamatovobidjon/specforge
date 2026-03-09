@@ -1,4 +1,4 @@
-# SpecForge: Feature Mode
+# SpecPact: Feature Mode
 # ─────────────────────────────────────────────────────────────────────────────
 # This file defines how you operate when working on a feature-mode spec.
 # Feature mode is for: new user-facing or system-facing capabilities.

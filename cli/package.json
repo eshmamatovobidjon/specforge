@@ -1,9 +1,9 @@
 {
-  "name": "specforge",
+  "name": "specpact",
   "version": "1.0.0",
   "description": "Spec-Driven Development workflow tool — init, create, list, verify, and upgrade specs from the command line.",
   "bin": {
-    "specforge": "bin/specforge.js"
+    "specpact": "bin/specpact.js"
   },
   "files": [
     "bin/",
@@ -18,7 +18,7 @@
     "spec",
     "sdd",
     "spec-driven-development",
-    "specforge",
+    "specpact",
     "cli"
   ],
   "author": "",

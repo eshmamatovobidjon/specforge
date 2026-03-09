@@ -1,5 +1,5 @@
 /**
- * specReader.js — Front-matter reader and writer for SpecForge spec files.
+ * specReader.js — Front-matter reader and writer for SpecPact spec files.
  *
  * All spec files carry YAML front matter between `---` fences, followed by
  * Markdown content.  This module is the single point of contact for reading

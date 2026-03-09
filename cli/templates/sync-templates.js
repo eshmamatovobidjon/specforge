@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * sync-templates.js — Pre-publish script for SpecForge CLI.
+ * sync-templates.js — Pre-publish script for SpecPact CLI.
  *
  * Copies the three template directories from the repo root into cli/templates/
  * before every `npm publish`. This ensures the CLI always ships with the exact

@@ -5,7 +5,7 @@ mode: nano
 status: stable
 created: 2026-02-14
 updated: 2026-02-14
-author: specforge-core
+author: specpact-core
 ---
 
 # Improve duplicate spec ID error message

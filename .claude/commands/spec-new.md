@@ -6,7 +6,7 @@
 # Usage: /spec-new
 # (No arguments — the interview collects everything needed)
 
-You are running the SpecForge spec creation interview.
+You are running the SpecPact spec creation interview.
 Your job is to ask focused questions, collect the developer's answers, and
 write a complete, valid spec.md file to the correct location.
 

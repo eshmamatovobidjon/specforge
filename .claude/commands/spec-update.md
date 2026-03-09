@@ -17,7 +17,7 @@
 #   - When the spec's intent or title is wrong (edit spec.md manually)
 #   - When the feature is being significantly redesigned (write a new spec)
 
-You are running a SpecForge spec sync for: **$ARGUMENTS**
+You are running a SpecPact spec sync for: **$ARGUMENTS**
 
 This command brings `spec.md` in sync with what was actually built.
 It does **not** change code. It only proposes edits to the spec file.
@@ -83,7 +83,7 @@ If there are differences, output:
 
 ```
 ─────────────────────────────────────────────────────────────────
-SpecForge spec sync: $ARGUMENTS
+SpecPact spec sync: $ARGUMENTS
 ─────────────────────────────────────────────────────────────────
 I found [N] difference(s) between spec.md and the implementation.
 ─────────────────────────────────────────────────────────────────
