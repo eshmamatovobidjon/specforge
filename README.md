@@ -2,7 +2,25 @@
 
 > Spec-Driven Development that fits how you actually work.
 
-SpecForge is a zero-dependency SDD system that lives inside your repository as shell scripts and markdown files. No proprietary CLI to install, no cloud service, no lock-in. It works with Claude Code and GitHub Copilot out of the box, and with any other AI tool that can read a text file.
+SpecForge helps teams define software intent before coding and keeps specifications as living, trackable contracts throughout a feature's lifetime. It works with Claude Code, GitHub Copilot, and any AI tool that can read a text file.
+
+---
+
+## Installation
+
+```sh
+npx specforge init
+```
+
+That is the entire installation experience. One command. Under 30 seconds. Works on macOS, Linux, and Windows.
+
+> **Requires:** Node.js 18+. No git required at install time.
+
+For daily use, install globally:
+
+```sh
+npm install -g specforge
+```
 
 ---
 
@@ -17,7 +35,7 @@ AI coding assistants are powerful, but they forget everything between sessions. 
 | One verbose workflow for every change size | **Three tiered modes** — nano, feature, system |
 | AI implements beyond the spec boundary | **Mode rules** — numbered, prioritised, enforced per session |
 | Unclear whether implementation matches the spec | **Verify command** — structured audit prompt, human-judged verdict |
-| External CLI tool to install and upgrade | **Zero dependencies** — Bash 3.2 + standard tools only |
+| No upgrade path for installed scripts | **`specforge upgrade`** — surgical update, never touches your specs |
 
 ---
 
@@ -46,140 +64,85 @@ Every SpecForge project has a `.sdd/` directory at the repo root. It contains th
 .sdd/modes/system.md   ← architectural changes
 ```
 
-The workflow for any change is the same:
+The workflow for any change:
 
-1. Create a spec (`new-spec.sh`)
-2. Fill it in (you write the contracts)
-3. Load it into your AI tool (`/spec-load` or paste the mode file)
-4. Implement (AI follows the spec, not the prompt)
-5. Verify (`verify.sh` generates the audit prompt)
-6. Mark stable (`update-spec.sh`)
-
----
-
-## Installation
-
-**Requires:** Bash 3.2+, git, and standard Unix tools (sed, grep, awk, date).
-Works on macOS, Linux, and Windows via Git Bash or WSL.
-
-Copy `.sdd/` into your repository root:
-
-```bash
-git clone https://github.com/specforge/specforge /tmp/specforge
-cp -r /tmp/specforge/.sdd .
-cp -r /tmp/specforge/.claude .   # optional: Claude Code slash commands
-cp -r /tmp/specforge/.github .   # optional: GitHub Copilot instructions
-rm -rf /tmp/specforge
-```
-
-Make scripts executable and run the setup wizard:
-
-```bash
-chmod +x .sdd/scripts/*.sh
-.sdd/scripts/init.sh
-```
-
-The wizard asks four questions (project name, type, language, and purpose) and stamps your Memory Bank. The whole process takes under two minutes.
+1. `specforge new nano fix-my-bug` — create a spec
+2. Fill it in — you write the contracts
+3. Load it into your AI tool — `/spec-load fix-my-bug` or paste the mode file
+4. Implement — AI follows the spec, not the prompt
+5. `specforge verify fix-my-bug` — generate the audit prompt
+6. `specforge update fix-my-bug stable` — mark it done
 
 ---
 
 ## Your first spec in 5 minutes
 
-Follow these steps exactly. No prior knowledge required.
+**Step 1 — Install (30 seconds)**
 
-**Step 1 — Install (1 minute)**
-
-```bash
-cd your-project-root
-git clone https://github.com/specforge/specforge /tmp/specforge
-cp -r /tmp/specforge/.sdd .
-chmod +x .sdd/scripts/*.sh
-rm -rf /tmp/specforge
+```sh
+cd your-project
+npx specforge init
 ```
 
-**Step 2 — Initialise (1 minute)**
+Answer four prompts: project name, type, language/stack, and one-sentence purpose. SpecForge stamps your Memory Bank and you're ready.
 
-```bash
-.sdd/scripts/init.sh
+**Step 2 — Fill in your Memory Bank (2 minutes)**
+
+Open `.sdd/memory/AGENTS.md` and fill in the remaining sections: your naming conventions, what the AI should never do, your backend and frontend stacks.
+
+**Step 3 — Create your first spec (30 seconds)**
+
+```sh
+specforge new nano  fix-my-bug        # bug fix
+specforge new feature my-feature      # new capability
+specforge new system my-architecture  # architectural change
 ```
 
-Answer the four prompts. You can change these answers later by editing `.sdd/memory/AGENTS.md`.
-
-**Step 3 — Fill in your Memory Bank (2 minutes)**
-
-Open `.sdd/memory/AGENTS.md` and fill in the remaining placeholders:
-- What is your backend stack?
-- What are your naming conventions?
-- What should the AI never do in your codebase?
-
-You don't need architecture.md yet. Come back to it after your first spec.
-
-**Step 4 — Create your first spec (30 seconds)**
-
-```bash
-# For a bug fix:
-.sdd/scripts/new-spec.sh nano fix-my-bug
-
-# For a new feature:
-.sdd/scripts/new-spec.sh feature my-feature
-
-# For an architectural change:
-.sdd/scripts/new-spec.sh system my-architecture-change
-```
-
-**Step 5 — Fill in the spec and start implementing (30 seconds)**
+**Step 4 — Fill in the spec and start implementing**
 
 Open `.sdd/specs/fix-my-bug/spec.md` and fill in each section. Then load it into your AI tool:
 
 - **Claude Code:** `/spec-load fix-my-bug`
-- **Any other tool:** paste `.sdd/modes/nano.md` followed by your `spec.md` into the context
+- **Any other tool:** paste `.sdd/modes/nano.md` followed by your `spec.md`
 
-That's it. Your AI now has the contracts, constraints, and scope boundary before it writes a single line of code.
+Your AI now has the contracts, constraints, and scope boundary before it writes a single line of code.
 
 ---
 
 ## Commands
 
-```bash
-# Create a new spec
-.sdd/scripts/new-spec.sh <mode> <spec-id>
-  mode:     nano | feature | system
-  spec-id:  kebab-case, e.g. fix-null-carrier-id
-
-# List all specs and their status
-.sdd/scripts/list-specs.sh
-
-# Generate a verification prompt for a spec
-.sdd/scripts/verify.sh <spec-id>
-
-# Update a spec's status (and manage notes.md lifecycle)
-.sdd/scripts/update-spec.sh <spec-id> [new-status]
-  status:   draft | in-progress | stable | deprecated
-
-# One-time project setup
-.sdd/scripts/init.sh
+```sh
+specforge init                          # install SpecForge, run setup wizard
+specforge new <mode> <spec-id>          # create a spec (nano | feature | system)
+specforge list                          # show all specs with status
+specforge verify <spec-id>              # generate verification audit prompt
+specforge update <spec-id> [status]     # update status, manage notes.md lifecycle
+specforge upgrade                       # update scripts/modes to latest version
+specforge upgrade --dry-run             # preview upgrade without applying
 ```
+
+Run `specforge --help` or `specforge <command> --help` for full usage.
 
 ---
 
 ## Claude Code slash commands
 
-If you use Claude Code, SpecForge ships four slash commands in `.claude/commands/`:
+SpecForge ships four slash commands in `.claude/commands/`:
 
 | Command | What it does |
 |---|---|
-| `/spec-new` | Guided interview to create a spec — no shell script required |
+| `/spec-new` | Guided interview to create a spec — no shell required |
 | `/spec-load <id>` | Loads spec + Memory Bank, restates intent, waits for confirmation before coding |
 | `/spec-verify <id>` | Audits codebase against spec contracts, outputs ✓/~/✗/? per contract |
-| `/spec-update <id>` | Proposes spec.md edits when implementation diverged from the spec |
+| `/spec-update <id>` | Proposes spec.md edits when implementation diverged |
 
-`/spec-load` includes a mandatory confirmation step. The AI reads the spec, restates what it understands, lists every contract it will implement, and **waits for your "correct, begin" before writing any code.** This is not optional.
+`/spec-load` includes a mandatory confirmation step. The AI reads the spec, restates what it understands, lists every contract it will implement, and **waits for your "correct, begin" before writing any code.**
 
 ---
 
 ## GitHub Copilot
 
-Copy `.github/copilot-instructions.md` into your project. Copilot will read this file before every session and will:
+SpecForge installs agent definitions and prompt files in `.github/agents/` and `.github/prompts/`. Copilot will:
 - Look for a spec in `.sdd/specs/` before implementing
 - Read AGENTS.md for conventions
 - Route to the correct mode rules file based on the spec's `mode` field
@@ -196,50 +159,28 @@ Copy `.github/copilot-instructions.md` into your project. Copilot will read this
 │   ├── architecture.md    ← Service topology, data flow, boundaries.
 │   └── decisions.md       ← ADR log. Why X was chosen over Y.
 ├── specs/
-│   ├── README.md          ← Explains the _example folders.
-│   ├── _example/          ← Complete feature spec example (read this first).
-│   │   └── spec.md
-│   ├── _example-nano/     ← Complete nano spec example.
-│   │   └── spec.md
-│   └── _example-nano-2/   ← A second nano example (different bug scenario).
-│       └── spec.md
+│   ├── _example/          ← Complete feature spec example (read this first)
+│   └── _example-nano/     ← Complete nano spec example
 ├── modes/
-│   ├── nano.md            ← 7 prioritised rules for nano-mode work.
-│   ├── feature.md         ← 9 prioritised rules for feature-mode work.
-│   └── system.md          ← 10 prioritised rules for system-mode work.
+│   ├── nano.md            ← 7 prioritised rules for nano-mode work
+│   ├── feature.md         ← 9 prioritised rules for feature-mode work
+│   └── system.md          ← 10 prioritised rules for system-mode work
 ├── scripts/
-│   ├── init.sh            ← One-time setup wizard.
-│   ├── new-spec.sh        ← Bootstrap a new spec from a template.
-│   ├── list-specs.sh      ← Registry view with ANSI colour output.
-│   ├── verify.sh          ← Generate a verification audit prompt.
-│   └── update-spec.sh     ← Update status and manage notes.md lifecycle.
+│   ├── init.sh            ← One-time setup wizard (also available as CLI)
+│   ├── new-spec.sh        ← Bootstrap a new spec from a template
+│   ├── list-specs.sh      ← Registry view with ANSI colour output
+│   ├── verify.sh          ← Generate a verification audit prompt
+│   └── update-spec.sh     ← Update status and manage notes.md lifecycle
 └── templates/
-    ├── spec-nano.md        ← Nano spec template.
-    ├── spec-feature.md     ← Feature spec template.
-    ├── spec-system.md      ← System spec template.
-    └── notes.md            ← Notes template (ephemeral context file).
+    ├── spec-nano.md
+    ├── spec-feature.md
+    ├── spec-system.md
+    └── notes.md
 
-.claude/commands/
-├── spec-new.md            ← /spec-new
-├── spec-load.md           ← /spec-load <id>
-├── spec-verify.md         ← /spec-verify <id>
-└── spec-update.md         ← /spec-update <id>
-
-.github/
-└── copilot-instructions.md
+.claude/commands/          ← Claude Code slash commands
+.github/agents/            ← GitHub Copilot agent definitions
+.github/prompts/           ← GitHub Copilot prompt files
 ```
-
----
-
-## Example specs
-
-Two nano examples are included in `.sdd/specs/`:
-
-**`_example-nano/`** — Improving an error message in `new-spec.sh`. The spec defines exactly which words must appear in the output, what must not change, and how to verify in one command. 20 lines total.
-
-**`_example-nano-2/`** — Fixing a health endpoint that returns HTTP 200 even when the database is unreachable. Shows how to specify observable outcomes (status codes, response fields, timeout) without describing implementation.
-
-**`_example/`** — A full feature spec for `new-spec.sh` itself. Shows all seven sections, good contract phrasing, interface signatures, and a data shape block.
 
 ---
 
@@ -249,24 +190,24 @@ Two nano examples are included in `.sdd/specs/`:
 draft ──► in-progress ──► stable ──► deprecated
 ```
 
-- **draft** — spec is written, work has not started
-- **in-progress** — implementation is underway
+- **draft** — spec written, work not started
+- **in-progress** — implementation underway
 - **stable** — all contracts verified, notes.md deleted
 - **deprecated** — feature removed; spec kept as permanent record
 
-Transitions are made with `update-spec.sh`. Specs are never deleted.
+Specs are never deleted.
 
 ---
 
 ## Philosophy
 
-1. **Specs are contracts, not documents.** They are compact (one screen), verifiable, and honest about what they exclude.
-2. **Specs outlive branches.** A spec lives in `main` and is maintained across the feature's entire life — not discarded after the PR merges.
-3. **Ceremony matches change size.** A bug fix takes a 20-line nano spec. An architectural change gets a system spec with a migration path and a risk table.
-4. **Memory Bank loads always; specs load on demand.** Every session gets the project context. Only the relevant spec gets loaded for each task.
-5. **Verification is human-triggered.** SpecForge generates the audit prompt. You decide what the result means and when to mark a spec stable.
-6. **Zero dependencies.** Bash 3.2 and standard Unix tools. No package manager, no cloud service, no binary to install.
-7. **Adoptable incrementally.** You can add SpecForge to an existing repo in under five minutes. Use it for one spec first. Expand when it proves its value.
+1. **Specs are contracts, not documents.** Compact (one screen), verifiable, honest about exclusions.
+2. **Specs outlive branches.** A spec lives in `main` for the feature's entire life.
+3. **Ceremony matches change size.** A bug fix takes a 20-line nano spec. An architectural change gets a system spec with a migration path.
+4. **Memory Bank loads always; specs load on demand.** Every session gets project context. Only the relevant spec loads per task.
+5. **Verification is human-triggered.** SpecForge generates the audit prompt. You decide what the result means.
+6. **No lock-in.** The CLI is optional. All workflow files are plain Markdown and shell scripts you own.
+7. **Adoptable incrementally.** Add SpecForge to an existing repo in under five minutes.
 
 ---
 

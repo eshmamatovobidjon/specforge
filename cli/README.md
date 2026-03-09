@@ -200,3 +200,28 @@ specforge upgrade --yes        # skip confirmation (for CI pipelines)
 ## License
 
 MIT
+
+---
+
+## Publishing (maintainers)
+
+Templates are bundled inside the npm package. The `prepublishOnly` script syncs them automatically before every publish — you never need to run it manually.
+
+```sh
+cd cli
+
+# 1. Bump the version
+npm version patch   # or minor / major
+
+# 2. Publish (prepublishOnly syncs templates automatically)
+npm publish --access public
+```
+
+The `prepublishOnly` hook runs `node templates/sync-templates.js`, which copies `.sdd/`, `.claude/`, and `.github/` from the repo root into `cli/templates/`. This ensures the published package always ships the exact templates that match its version.
+
+**Before first publish**, make sure you are logged in to npm:
+
+```sh
+npm login
+npm whoami   # should print your npm username
+```
