@@ -2,10 +2,14 @@
   "name": "specforge",
   "version": "1.0.0",
   "description": "Spec-Driven Development workflow tool — init, create, list, verify, and upgrade specs from the command line.",
-  "main": "src/index.js",
   "bin": {
     "specforge": "bin/specforge.js"
   },
+  "files": [
+    "bin/",
+    "src/",
+    "templates/"
+  ],
   "scripts": {
     "sync-templates": "node templates/sync-templates.js",
     "prepublishOnly": "node templates/sync-templates.js"
@@ -23,8 +27,7 @@
     "chalk": "^5.3.0",
     "commander": "^12.1.0",
     "gray-matter": "^4.0.3",
-    "inquirer": "^9.3.7",
-    "ora": "^8.1.1"
+    "inquirer": "^9.3.7"
   },
   "engines": {
     "node": ">=18.0.0"

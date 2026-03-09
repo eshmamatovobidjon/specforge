@@ -87,10 +87,10 @@ export function stampAgents(targetDir, answers) {
   let content = readFileSync(agentsPath, 'utf8');
 
   content = content
-    .replace(/\{\{PROJECT_NAME\}\}/g, answers.name)
-    .replace(/\{\{PROJECT_TYPE\}\}/g, answers.type)
-    .replace(/\{\{PRIMARY_LANGUAGE\}\}/g, answers.language)
-    .replace(/\{\{PROJECT_PURPOSE\}\}/g, answers.purpose);
+    .replace(/\[PROJECT_NAME\]/g, answers.name)
+    .replace(/\[PROJECT_TYPE\]/g, answers.type)
+    .replace(/\[PRIMARY_LANGUAGES\]/g, answers.language)
+    .replace(/\[PROJECT_PURPOSE\]/g, answers.purpose);
 
   writeFileSync(agentsPath, content, 'utf8');
 }
