@@ -4,11 +4,12 @@ import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import { program } from 'commander';
 
-import { initCommand }   from '../src/commands/init.js';
-import { newCommand }    from '../src/commands/new.js';
-import { listCommand }   from '../src/commands/list.js';
-import { verifyCommand } from '../src/commands/verify.js';
-import { updateCommand } from '../src/commands/update.js';
+import { initCommand }    from '../src/commands/init.js';
+import { newCommand }     from '../src/commands/new.js';
+import { listCommand }    from '../src/commands/list.js';
+import { verifyCommand }  from '../src/commands/verify.js';
+import { updateCommand }  from '../src/commands/update.js';
+import { upgradeCommand } from '../src/commands/upgrade.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname  = dirname(__filename);
@@ -54,5 +55,13 @@ program
   .command('update <spec-id> [status]')
   .description('Update a spec\'s status (draft | in-progress | stable | deprecated)')
   .action(updateCommand);
+
+// ── specforge upgrade ─────────────────────────────────────────────────────────
+program
+  .command('upgrade')
+  .description('Update .sdd/scripts/ and .sdd/modes/ from the bundled version')
+  .option('--dry-run', 'show what would change without applying')
+  .option('--yes',     'skip confirmation prompt (for CI)')
+  .action(upgradeCommand);
 
 program.parse(process.argv);
