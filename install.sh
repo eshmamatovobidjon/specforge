@@ -1,24 +1,24 @@
 #!/usr/bin/env bash
 # =============================================================================
-# SpecForge installer
+# SpecPact installer
 #
 # Usage (recommended — run from your project root):
-#   curl -fsSL https://raw.githubusercontent.com/specforge/specforge/main/install.sh | bash
+#   curl -fsSL https://raw.githubusercontent.com/specpact/specpact/main/install.sh | bash
 #
 # Usage (local clone):
-#   bash /path/to/specforge/install.sh
+#   bash /path/to/specpact/install.sh
 #
 # Environment variables:
-#   SPECFORGE_REPO    Override the source repo URL (default: GitHub main)
-#   SPECFORGE_BRANCH  Override the branch to clone (default: main)
-#   SPECFORGE_NO_AI   Set to "1" to skip .claude/ and .github/ AI bridge files
+#   SPECPACT_REPO    Override the source repo URL (default: GitHub main)
+#   SPECPACT_BRANCH  Override the branch to clone (default: main)
+#   SPECPACT_NO_AI   Set to "1" to skip .claude/ and .github/ AI bridge files
 # =============================================================================
 set -euo pipefail
 
 # ── Configuration ─────────────────────────────────────────────────────────────
-REPO="${SPECFORGE_REPO:-https://github.com/specforge/specforge}"
-BRANCH="${SPECFORGE_BRANCH:-main}"
-SKIP_AI="${SPECFORGE_NO_AI:-0}"
+REPO="${SPECPACT_REPO:-https://github.com/specpact/specpact}"
+BRANCH="${SPECPACT_BRANCH:-main}"
+SKIP_AI="${SPECPACT_NO_AI:-0}"
 SDD_DIR=".sdd"
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
@@ -29,12 +29,12 @@ print_info() { printf '  %s\n' "$1"; }
 
 header() {
   printf '\n'
-  printf '  SpecForge installer\n'
+  printf '  SpecPact installer\n'
   printf '  %s\n\n' "────────────────────────────────────────"
 }
 
 cleanup() {
-  rm -rf /tmp/specforge-install 2>/dev/null || true
+  rm -rf /tmp/specpact-install 2>/dev/null || true
 }
 trap cleanup EXIT
 
@@ -43,13 +43,13 @@ header
 
 # ── Preflight: required tools ─────────────────────────────────────────────────
 if ! command -v git >/dev/null 2>&1; then
-  print_err "git is required to install SpecForge."
+  print_err "git is required to install SpecPact."
   print_err "Install git (https://git-scm.com) and re-run this script."
   exit 1
 fi
 
 if ! command -v bash >/dev/null 2>&1; then
-  print_err "bash is required to run SpecForge scripts."
+  print_err "bash is required to run SpecPact scripts."
   exit 1
 fi
 
@@ -57,7 +57,7 @@ fi
 BASH_MAJOR="${BASH_VERSINFO[0]:-0}"
 BASH_MINOR="${BASH_VERSINFO[1]:-0}"
 if [[ "${BASH_MAJOR}" -lt 3 ]] || [[ "${BASH_MAJOR}" -eq 3 && "${BASH_MINOR}" -lt 2 ]]; then
-  print_warn "Bash ${BASH_VERSION} detected. SpecForge requires Bash 3.2 or later."
+  print_warn "Bash ${BASH_VERSION} detected. SpecPact requires Bash 3.2 or later."
   print_warn "Upgrade bash before using the scripts (current version may cause errors)."
 fi
 
@@ -65,7 +65,7 @@ fi
 # Warn but do not block if not in a git repo — some teams initialise git after
 if [[ ! -d ".git" ]]; then
   print_warn "No .git directory found in the current directory."
-  print_warn "SpecForge works best at the root of a git repository."
+  print_warn "SpecPact works best at the root of a git repository."
   print_warn "Run \`git init\` first if this is a new project."
   printf '\n'
   printf '  Install anyway? (y/n): '
@@ -80,9 +80,9 @@ fi
 if [[ -d "${SDD_DIR}" ]]; then
   printf '\n'
   print_err "${SDD_DIR}/ already exists in this directory."
-  print_err "SpecForge appears to already be installed."
+  print_err "SpecPact appears to already be installed."
   print_err ""
-  print_err "To update SpecForge scripts only (preserves your specs and memory):"
+  print_err "To update SpecPact scripts only (preserves your specs and memory):"
   print_err "  bash install.sh --update     (not yet implemented — update manually)"
   print_err ""
   print_err "To start fresh (WARNING: deletes all specs and memory):"
@@ -91,11 +91,11 @@ if [[ -d "${SDD_DIR}" ]]; then
 fi
 
 # ── Download ──────────────────────────────────────────────────────────────────
-print_info "Cloning SpecForge from ${REPO}..."
+print_info "Cloning SpecPact from ${REPO}..."
 printf '\n'
 
-rm -rf /tmp/specforge-install
-if ! git clone --depth=1 --branch "${BRANCH}" "${REPO}" /tmp/specforge-install 2>&1 | sed 's/^/    /'; then
+rm -rf /tmp/specpact-install
+if ! git clone --depth=1 --branch "${BRANCH}" "${REPO}" /tmp/specpact-install 2>&1 | sed 's/^/    /'; then
   printf '\n'
   print_err "Failed to clone from: ${REPO}"
   print_err "Check your internet connection and try again."
@@ -106,7 +106,7 @@ fi
 printf '\n'
 
 # ── Verify download integrity ─────────────────────────────────────────────────
-if [[ ! -d "/tmp/specforge-install/.sdd" ]]; then
+if [[ ! -d "/tmp/specpact-install/.sdd" ]]; then
   print_err "Download appears incomplete — .sdd/ not found in the cloned repo."
   print_err "Try again or install manually."
   exit 1
@@ -114,7 +114,7 @@ fi
 
 REQUIRED_SCRIPTS="init.sh new-spec.sh list-specs.sh verify.sh update-spec.sh"
 for script in ${REQUIRED_SCRIPTS}; do
-  if [[ ! -f "/tmp/specforge-install/.sdd/scripts/${script}" ]]; then
+  if [[ ! -f "/tmp/specpact-install/.sdd/scripts/${script}" ]]; then
     print_err "Download appears incomplete — .sdd/scripts/${script} not found."
     print_err "Try again or install manually."
     exit 1
@@ -122,35 +122,35 @@ for script in ${REQUIRED_SCRIPTS}; do
 done
 
 # ── Install core (.sdd/) ──────────────────────────────────────────────────────
-cp -r /tmp/specforge-install/.sdd "${SDD_DIR}"
+cp -r /tmp/specpact-install/.sdd "${SDD_DIR}"
 chmod +x "${SDD_DIR}/scripts/"*.sh
 print_ok "Core installed: .sdd/"
 
 # ── Install AI bridges (optional) ────────────────────────────────────────────
 if [[ "${SKIP_AI}" == "1" ]]; then
-  print_info "AI bridge files skipped (SPECFORGE_NO_AI=1)."
+  print_info "AI bridge files skipped (SPECPACT_NO_AI=1)."
 else
   # Claude Code slash commands
-  if [[ -d "/tmp/specforge-install/.claude" ]]; then
+  if [[ -d "/tmp/specpact-install/.claude" ]]; then
     if [[ -d ".claude" ]]; then
       # .claude/ exists — merge commands only, don't overwrite other content
       mkdir -p ".claude/commands"
-      cp /tmp/specforge-install/.claude/commands/*.md .claude/commands/ 2>/dev/null || true
+      cp /tmp/specpact-install/.claude/commands/*.md .claude/commands/ 2>/dev/null || true
       print_ok "Claude Code commands merged into existing .claude/commands/"
     else
-      cp -r /tmp/specforge-install/.claude .claude
+      cp -r /tmp/specpact-install/.claude .claude
       print_ok "Claude Code commands installed: .claude/commands/"
     fi
   fi
 
   # GitHub Copilot instructions
-  if [[ -f "/tmp/specforge-install/.github/copilot-instructions.md" ]]; then
+  if [[ -f "/tmp/specpact-install/.github/copilot-instructions.md" ]]; then
     if [[ -f ".github/copilot-instructions.md" ]]; then
       print_warn ".github/copilot-instructions.md already exists — not overwriting."
-      print_warn "Compare manually with /tmp/specforge-install/.github/copilot-instructions.md"
+      print_warn "Compare manually with /tmp/specpact-install/.github/copilot-instructions.md"
     else
       mkdir -p .github
-      cp /tmp/specforge-install/.github/copilot-instructions.md .github/
+      cp /tmp/specpact-install/.github/copilot-instructions.md .github/
       print_ok "Copilot instructions installed: .github/copilot-instructions.md"
     fi
   fi
@@ -159,7 +159,7 @@ fi
 # ── Summary ───────────────────────────────────────────────────────────────────
 printf '\n'
 printf '  %s\n' "────────────────────────────────────────"
-print_ok "SpecForge installed successfully."
+print_ok "SpecPact installed successfully."
 printf '\n'
 print_info "Installed:"
 printf '    .sdd/memory/     ← Memory Bank (fill these in)\n'

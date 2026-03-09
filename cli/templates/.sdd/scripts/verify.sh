@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # =============================================================================
-# SpecForge — verify.sh
+# SpecPact — verify.sh
 # Generate a structured verification prompt for a spec.
 # Paste the output into your AI tool to audit implementation against contracts.
 #
@@ -102,7 +102,7 @@ if [[ "${STATUS}" == "deprecated" ]]; then
 fi
 
 # ── Header ────────────────────────────────────────────────────────────────────
-printf '  \033[1mSpecForge verification prompt\033[0m\n'
+printf '  \033[1mSpecPact verification prompt\033[0m\n'
 printf '  Spec:   %s\n' "${TITLE}"
 printf '  ID:     %s\n' "${SPEC_ID}"
 printf '  Mode:   %s\n' "${MODE}"
@@ -123,7 +123,7 @@ fi
 cat <<PROMPT
   ┌─────────────────────────────────────────────────────────────────────────
   │
-  │  SPECFORGE VERIFICATION — ${SPEC_ID}
+  │  SPECPACT VERIFICATION — ${SPEC_ID}
   │  This is an audit task only. Do NOT write any new code.
   │
   │  Step 1 — Load context

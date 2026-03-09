@@ -1,15 +1,15 @@
-# SpecForge
+# SpecPact
 
 > Spec-Driven Development that fits how you actually work.
 
-SpecForge helps teams define software intent before coding and keeps specifications as living, trackable contracts throughout a feature's lifetime. It works with Claude Code, GitHub Copilot, and any AI tool that can read a text file.
+SpecPact helps teams define software intent before coding and keeps specifications as living, trackable contracts throughout a feature's lifetime. It works with Claude Code, GitHub Copilot, and any AI tool that can read a text file.
 
 ---
 
 ## Installation
 
 ```sh
-npx specforge init
+npx specpact init
 ```
 
 That is the entire installation experience. One command. Under 30 seconds. Works on macOS, Linux, and Windows.
@@ -19,29 +19,29 @@ That is the entire installation experience. One command. Under 30 seconds. Works
 For daily use, install globally:
 
 ```sh
-npm install -g specforge
+npm install -g specpact
 ```
 
 ---
 
-## Why SpecForge
+## Why SpecPact
 
-AI coding assistants are powerful, but they forget everything between sessions. They implement what the prompt implies, not what the spec requires. They treat a bug fix and an architectural change with the same ceremony. SpecForge fixes this.
+AI coding assistants are powerful, but they forget everything between sessions. They implement what the prompt implies, not what the spec requires. They treat a bug fix and an architectural change with the same ceremony. SpecPact fixes this.
 
-| Problem | SpecForge's answer |
+| Problem | SpecPact's answer |
 |---|---|
 | AI forgets project context between sessions | **Memory Bank** — three files loaded into every session |
 | Specs die when the PR merges | Specs are **permanent** — deprecated when removed, never deleted |
 | One verbose workflow for every change size | **Three tiered modes** — nano, feature, system |
 | AI implements beyond the spec boundary | **Mode rules** — numbered, prioritised, enforced per session |
 | Unclear whether implementation matches the spec | **Verify command** — structured audit prompt, human-judged verdict |
-| No upgrade path for installed scripts | **`specforge upgrade`** — surgical update, never touches your specs |
+| No upgrade path for installed scripts | **`specpact upgrade`** — surgical update, never touches your specs |
 
 ---
 
 ## How it works
 
-Every SpecForge project has a `.sdd/` directory at the repo root. It contains three things:
+Every SpecPact project has a `.sdd/` directory at the repo root. It contains three things:
 
 **Memory Bank** — files that load into every AI session, every time.
 ```
@@ -66,12 +66,12 @@ Every SpecForge project has a `.sdd/` directory at the repo root. It contains th
 
 The workflow for any change:
 
-1. `specforge new nano fix-my-bug` — create a spec
+1. `specpact new nano fix-my-bug` — create a spec
 2. Fill it in — you write the contracts
 3. Load it into your AI tool — `/spec-load fix-my-bug` or paste the mode file
 4. Implement — AI follows the spec, not the prompt
-5. `specforge verify fix-my-bug` — generate the audit prompt
-6. `specforge update fix-my-bug stable` — mark it done
+5. `specpact verify fix-my-bug` — generate the audit prompt
+6. `specpact update fix-my-bug stable` — mark it done
 
 ---
 
@@ -81,10 +81,10 @@ The workflow for any change:
 
 ```sh
 cd your-project
-npx specforge init
+npx specpact init
 ```
 
-Answer four prompts: project name, type, language/stack, and one-sentence purpose. SpecForge stamps your Memory Bank and you're ready.
+Answer four prompts: project name, type, language/stack, and one-sentence purpose. SpecPact stamps your Memory Bank and you're ready.
 
 **Step 2 — Fill in your Memory Bank (2 minutes)**
 
@@ -93,9 +93,9 @@ Open `.sdd/memory/AGENTS.md` and fill in the remaining sections: your naming con
 **Step 3 — Create your first spec (30 seconds)**
 
 ```sh
-specforge new nano  fix-my-bug        # bug fix
-specforge new feature my-feature      # new capability
-specforge new system my-architecture  # architectural change
+specpact new nano  fix-my-bug        # bug fix
+specpact new feature my-feature      # new capability
+specpact new system my-architecture  # architectural change
 ```
 
 **Step 4 — Fill in the spec and start implementing**
@@ -112,22 +112,22 @@ Your AI now has the contracts, constraints, and scope boundary before it writes 
 ## Commands
 
 ```sh
-specforge init                          # install SpecForge, run setup wizard
-specforge new <mode> <spec-id>          # create a spec (nano | feature | system)
-specforge list                          # show all specs with status
-specforge verify <spec-id>              # generate verification audit prompt
-specforge update <spec-id> [status]     # update status, manage notes.md lifecycle
-specforge upgrade                       # update scripts/modes to latest version
-specforge upgrade --dry-run             # preview upgrade without applying
+specpact init                          # install SpecPact, run setup wizard
+specpact new <mode> <spec-id>          # create a spec (nano | feature | system)
+specpact list                          # show all specs with status
+specpact verify <spec-id>              # generate verification audit prompt
+specpact update <spec-id> [status]     # update status, manage notes.md lifecycle
+specpact upgrade                       # update scripts/modes to latest version
+specpact upgrade --dry-run             # preview upgrade without applying
 ```
 
-Run `specforge --help` or `specforge <command> --help` for full usage.
+Run `specpact --help` or `specpact <command> --help` for full usage.
 
 ---
 
 ## Claude Code slash commands
 
-SpecForge ships four slash commands in `.claude/commands/`:
+SpecPact ships four slash commands in `.claude/commands/`:
 
 | Command | What it does |
 |---|---|
@@ -142,7 +142,7 @@ SpecForge ships four slash commands in `.claude/commands/`:
 
 ## GitHub Copilot
 
-SpecForge installs agent definitions and prompt files in `.github/agents/` and `.github/prompts/`. Copilot will:
+SpecPact installs agent definitions and prompt files in `.github/agents/` and `.github/prompts/`. Copilot will:
 - Look for a spec in `.sdd/specs/` before implementing
 - Read AGENTS.md for conventions
 - Route to the correct mode rules file based on the spec's `mode` field
@@ -205,9 +205,9 @@ Specs are never deleted.
 2. **Specs outlive branches.** A spec lives in `main` for the feature's entire life.
 3. **Ceremony matches change size.** A bug fix takes a 20-line nano spec. An architectural change gets a system spec with a migration path.
 4. **Memory Bank loads always; specs load on demand.** Every session gets project context. Only the relevant spec loads per task.
-5. **Verification is human-triggered.** SpecForge generates the audit prompt. You decide what the result means.
+5. **Verification is human-triggered.** SpecPact generates the audit prompt. You decide what the result means.
 6. **No lock-in.** The CLI is optional. All workflow files are plain Markdown and shell scripts you own.
-7. **Adoptable incrementally.** Add SpecForge to an existing repo in under five minutes.
+7. **Adoptable incrementally.** Add SpecPact to an existing repo in under five minutes.
 
 ---
 

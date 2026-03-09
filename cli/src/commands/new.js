@@ -1,5 +1,5 @@
 /**
- * new.js — specforge new <mode> <spec-id>
+ * new.js — specpact new <mode> <spec-id>
  *
  * Creates a new spec file from the installed template.  Full Node.js
  * reimplementation of .sdd/scripts/new-spec.sh — no shell exec.
@@ -7,7 +7,7 @@
  * Flow:
  *   1. Validate mode  (nano | feature | system)
  *   2. Validate spec-id  (kebab-case regex)
- *   3. Guard: ensure .sdd/ exists (i.e. specforge init has been run)
+ *   3. Guard: ensure .sdd/ exists (i.e. specpact init has been run)
  *   4. Guard: block if spec already exists
  *   5. Guard: ensure template file exists
  *   6. Stamp template → spec.md  (replace YYYY-MM-DD and <spec-id>)
@@ -22,7 +22,7 @@ import { ok, err, hint, spacer } from '../lib/printer.js';
 import { VALID_MODES, SPEC_ID_PATTERN, today } from '../lib/specReader.js';
 
 /**
- * Handler for `specforge new <mode> <spec-id>`.
+ * Handler for `specpact new <mode> <spec-id>`.
  *
  * @param {string} mode   - 'nano' | 'feature' | 'system'
  * @param {string} specId - kebab-case spec identifier
@@ -51,7 +51,7 @@ export function newCommand(mode, specId) {
   // ─── 3. Guard: .sdd/ must exist ──────────────────────────────────────────
   if (!existsSync(sddDir)) {
     err('.sdd/ not found in this directory.');
-    hint('Run `specforge init` first to install SpecForge into this project.');
+    hint('Run `specpact init` first to install SpecPact into this project.');
     process.exit(1);
   }
 
@@ -66,7 +66,7 @@ export function newCommand(mode, specId) {
   const templateFile = join(templatesDir, `spec-${mode}.md`);
   if (!existsSync(templateFile)) {
     err(`Template not found: .sdd/templates/spec-${mode}.md`);
-    hint('Run `specforge init` to restore missing templates.');
+    hint('Run `specpact init` to restore missing templates.');
     process.exit(1);
   }
 

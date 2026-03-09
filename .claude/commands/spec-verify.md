@@ -6,7 +6,7 @@
 # Usage: /spec-verify <spec-id>
 # Example: /spec-verify freight-matching
 
-You are running a SpecForge verification audit for spec: **$ARGUMENTS**
+You are running a SpecPact verification audit for spec: **$ARGUMENTS**
 
 This is a **read-only audit**. You must not write, modify, or delete any code or files.
 Your only output is an honest assessment of whether the implementation matches the spec.
@@ -66,7 +66,7 @@ Output the following structure exactly. Do not add narrative before it.
 
 ```
 ─────────────────────────────────────────────────────────────────
-SpecForge verification: $ARGUMENTS
+SpecPact verification: $ARGUMENTS
 ─────────────────────────────────────────────────────────────────
 Spec:    [title]
 Mode:    [mode]

@@ -5,7 +5,7 @@ mode: feature
 status: stable
 created: 2026-01-10
 updated: 2026-03-01
-author: specforge-core
+author: specpact-core
 ---
 
 # new-spec.sh — spec bootstrapping command
@@ -79,7 +79,7 @@ Placeholders replaced by sed:
 - Auto-detecting the correct mode from the task description (future CLI feature)
 - Creating specs from a guided interview (that is the /spec-new Claude Code command)
 - Populating spec content beyond front matter and template structure
-- Git operations (branching, committing) — SpecForge does not manage git
+- Git operations (branching, committing) — SpecPact does not manage git
 
 ## Open questions
 - None.

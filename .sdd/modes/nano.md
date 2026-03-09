@@ -1,4 +1,4 @@
-# SpecForge: Nano Mode
+# SpecPact: Nano Mode
 # ─────────────────────────────────────────────────────────────────────────────
 # This file defines how you operate when working on a nano-mode spec.
 # Nano mode is for: bug fixes, small tweaks, targeted refactors.

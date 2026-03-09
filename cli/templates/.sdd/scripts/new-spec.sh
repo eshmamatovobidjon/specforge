@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # =============================================================================
-# SpecForge — new-spec.sh
+# SpecPact — new-spec.sh
 # Bootstrap a new spec from a template.
 #
 # Usage: .sdd/scripts/new-spec.sh <mode> <spec-id>
@@ -96,7 +96,7 @@ NOTES_TEMPLATE="${SDD_DIR}/templates/notes.md"
 if [[ ! -f "${SPEC_TEMPLATE}" ]]; then
   printf '\n'
   print_err "Template not found: .sdd/templates/spec-${MODE}.md"
-  print_err "The .sdd/ directory may be incomplete. Re-install SpecForge."
+  print_err "The .sdd/ directory may be incomplete. Re-install SpecPact."
   printf '\n'
   exit 1
 fi
@@ -104,7 +104,7 @@ fi
 if [[ "${MODE}" != "nano" && ! -f "${NOTES_TEMPLATE}" ]]; then
   printf '\n'
   print_err "Template not found: .sdd/templates/notes.md"
-  print_err "The .sdd/ directory may be incomplete. Re-install SpecForge."
+  print_err "The .sdd/ directory may be incomplete. Re-install SpecPact."
   printf '\n'
   exit 1
 fi

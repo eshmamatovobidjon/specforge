@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # =============================================================================
-# SpecForge — update-spec.sh
+# SpecPact — update-spec.sh
 # Update a spec's status after implementation, and manage the notes.md lifecycle.
 # Also generates an AI prompt to sync spec.md if implementation diverged.
 #
@@ -212,7 +212,7 @@ if [[ "${STATUS_CHANGED}" == true ]]; then
 cat <<PROMPT
   ┌─────────────────────────────────────────────────────────────────────────
   │
-  │  SPECFORGE SPEC SYNC — ${SPEC_ID}
+  │  SPECPACT SPEC SYNC — ${SPEC_ID}
   │  Bring spec.md in sync with what was actually implemented.
   │
   │  Step 1 — Load context

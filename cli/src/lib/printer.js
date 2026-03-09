@@ -1,5 +1,5 @@
 /**
- * printer.js — ANSI colour helpers for SpecForge CLI output.
+ * printer.js — ANSI colour helpers for SpecPact CLI output.
  *
  * Provides four semantic output functions:
  *   ok   — green   — success / completion

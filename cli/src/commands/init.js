@@ -1,5 +1,5 @@
 /**
- * init.js — specforge init command.
+ * init.js — specpact init command.
  *
  * Full flow:
  *   1. Guard: check if .sdd/ already exists (block unless --force)
@@ -9,7 +9,7 @@
  *   5. Install .github/ (unless --no-copilot)
  *   6. Run Memory Bank wizard
  *   7. Stamp AGENTS.md with wizard answers
- *   8. Write .sdd/.specforge-version
+ *   8. Write .sdd/.specpact-version
  *   9. chmod +x .sdd/scripts/*.sh (macOS/Linux only)
  *  10. Print next-steps summary
  */
@@ -35,7 +35,7 @@ const pkg = JSON.parse(
 );
 
 /**
- * Main handler for `specforge init`.
+ * Main handler for `specpact init`.
  *
  * @param {object} options - commander option flags
  * @param {boolean} options.claude   - true = install .claude/ (default true, --no-claude sets false)
@@ -50,7 +50,7 @@ export async function initCommand(options) {
   if (existsSync(sddPath)) {
     if (!options.force) {
       err('.sdd/ already exists in this directory.');
-      hint('  If you want to reinstall SpecForge, run: specforge init --force');
+      hint('  If you want to reinstall SpecPact, run: specpact init --force');
       hint('  WARNING: --force will overwrite .sdd/scripts/ and .sdd/modes/ but leave .sdd/memory/ and .sdd/specs/ untouched.');
       process.exit(1);
     }
@@ -76,12 +76,12 @@ export async function initCommand(options) {
   const isGitRepo = isInsideGitRepo(targetDir);
   if (!isGitRepo) {
     warn('This directory is not inside a git repository.');
-    hint('  SpecForge works best with git. Run `git init` first if this is intentional.');
+    hint('  SpecPact works best with git. Run `git init` first if this is intentional.');
   }
 
   // ─── Step 3: Install .sdd/ ─────────────────────────────────────────────────
   spacer();
-  info('Installing SpecForge into ' + targetDir);
+  info('Installing SpecPact into ' + targetDir);
   spacer();
 
   const sddResult = installSdd(targetDir, { force: options.force });
@@ -177,7 +177,7 @@ function chmodScripts(scriptsDir) {
  */
 function printNextSteps(projectName) {
   spacer();
-  header('SpecForge is ready ✓');
+  header('SpecPact is ready ✓');
   spacer();
   console.log(`  Project: ${projectName}`);
   spacer();
@@ -187,9 +187,9 @@ function printNextSteps(projectName) {
   hint('       open .sdd/memory/AGENTS.md');
   console.log('');
   console.log('  2. Create your first spec:');
-  hint('       specforge new nano  <spec-id>   # bug fix');
-  hint('       specforge new feature <spec-id>  # new capability');
-  hint('       specforge new system <spec-id>   # architecture change');
+  hint('       specpact new nano  <spec-id>   # bug fix');
+  hint('       specpact new feature <spec-id>  # new capability');
+  hint('       specpact new system <spec-id>   # architecture change');
   console.log('');
   console.log('  3. Load it into your AI tool:');
   hint('       Claude Code: /spec-load <spec-id>');

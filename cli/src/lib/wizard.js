@@ -32,7 +32,7 @@ const PROJECT_TYPES = [
  */
 export async function runWizard() {
   spacer();
-  info('Memory Bank setup — answer four questions to personalise SpecForge for this project.');
+  info('Memory Bank setup — answer four questions to personalise SpecPact for this project.');
   hint('  You can edit these answers later in .sdd/memory/AGENTS.md');
   spacer();
 

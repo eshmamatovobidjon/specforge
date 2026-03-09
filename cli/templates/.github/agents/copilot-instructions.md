@@ -1,10 +1,10 @@
 # GitHub Copilot Instructions
 # ─────────────────────────────────────────────────────────────────────────────
 # This file is loaded into every GitHub Copilot session in this project.
-# It teaches Copilot to work within the SpecForge spec-driven workflow.
+# It teaches Copilot to work within the SpecPact spec-driven workflow.
 # ─────────────────────────────────────────────────────────────────────────────
 
-## You are working in a SpecForge project
+## You are working in a SpecPact project
 
 This project uses spec-driven development. Specifications in `.sdd/specs/` are
 the source of truth for what should be built. Your role is to implement what

@@ -1,5 +1,5 @@
 /**
- * upgrader.js — Diff bundled SpecForge templates against installed versions.
+ * upgrader.js — Diff bundled SpecPact templates against installed versions.
  *
  * Upgrade scope (only these two directories are ever written):
  *   .sdd/scripts/   — shell scripts that wrap CLI workflow commands
@@ -41,7 +41,7 @@ const CONTEXT_LINES = 3;
 export function buildUpgradePlan(projectRoot, bundledVersion) {
   const sddInstalled = join(projectRoot, '.sdd');
   const sddBundled   = join(TEMPLATES_DIR, '.sdd');
-  const versionFile  = join(sddInstalled, '.specforge-version');
+  const versionFile  = join(sddInstalled, '.specpact-version');
 
   const installedVersion = existsSync(versionFile)
     ? readFileSync(versionFile, 'utf8').trim()

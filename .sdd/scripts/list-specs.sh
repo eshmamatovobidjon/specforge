@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # =============================================================================
-# SpecForge — list-specs.sh
+# SpecPact — list-specs.sh
 # Display all specs in the registry with their status, mode, and title.
 #
 # Usage: .sdd/scripts/list-specs.sh [--no-colour]
@@ -67,7 +67,7 @@ extract_field() {
 if [[ ! -d "${SPECS_DIR}" ]]; then
   printf '\n'
   print_info "  \033[31m✗\033[0m Specs directory not found: .sdd/specs/"
-  print_info "  The .sdd/ directory may be incomplete. Re-install SpecForge."
+  print_info "  The .sdd/ directory may be incomplete. Re-install SpecPact."
   printf '\n'
   exit 1
 fi
@@ -113,7 +113,7 @@ done
 
 # ── Render ────────────────────────────────────────────────────────────────────
 printf '\n'
-printf '  \033[1mSpecForge — Spec Registry\033[0m\n'
+printf '  \033[1mSpecPact — Spec Registry\033[0m\n'
 printf '  %s\n' "──────────────────────────────────────────────────────────────────────"
 printf '  %-32s %-10s %-13s %s\n' "ID" "MODE" "STATUS" "TITLE"
 printf '  %s\n' "──────────────────────────────────────────────────────────────────────"

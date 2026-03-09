@@ -1,5 +1,5 @@
 /**
- * installer.js — Copies SpecForge templates into the target project directory.
+ * installer.js — Copies SpecPact templates into the target project directory.
  *
  * Handles three template groups:
  *   .sdd/       — core workflow files (scripts, modes, memory, templates, specs examples)
@@ -105,25 +105,25 @@ export function installGitHub(targetDir) {
 }
 
 /**
- * Stamp the SpecForge version into .sdd/.specforge-version.
+ * Stamp the SpecPact version into .sdd/.specpact-version.
  *
  * @param {string} targetDir
  * @param {string} version
  */
 export function writeVersionStamp(targetDir, version) {
-  const versionFile = join(targetDir, '.sdd', '.specforge-version');
+  const versionFile = join(targetDir, '.sdd', '.specpact-version');
   writeFileSync(versionFile, version, 'utf8');
 }
 
 /**
- * Read the installed SpecForge version from .sdd/.specforge-version.
+ * Read the installed SpecPact version from .sdd/.specpact-version.
  * Returns null if the file does not exist.
  *
  * @param {string} targetDir
  * @returns {string|null}
  */
 export function readVersionStamp(targetDir) {
-  const versionFile = join(targetDir, '.sdd', '.specforge-version');
+  const versionFile = join(targetDir, '.sdd', '.specpact-version');
   if (!existsSync(versionFile)) return null;
   return readFileSync(versionFile, 'utf8').trim();
 }

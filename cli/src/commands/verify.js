@@ -1,5 +1,5 @@
 /**
- * verify.js — specforge verify <spec-id>
+ * verify.js — specpact verify <spec-id>
  *
  * Reads the spec file and outputs a structured verification prompt to stdout.
  * The developer pastes this output into their AI tool.
@@ -7,8 +7,8 @@
  * Full Node.js reimplementation of .sdd/scripts/verify.sh — no shell exec.
  *
  * Output goes to stdout so it can be piped or redirected:
- *   specforge verify my-spec | pbcopy
- *   specforge verify my-spec > verify-prompt.md
+ *   specpact verify my-spec | pbcopy
+ *   specpact verify my-spec > verify-prompt.md
  *
  * Diagnostic messages (guards, errors) go to stderr so they don't pollute
  * the prompt when piped.
@@ -21,7 +21,7 @@ import { err, hint } from '../lib/printer.js';
 import { readSpec } from '../lib/specReader.js';
 
 /**
- * Handler for `specforge verify <spec-id>`.
+ * Handler for `specpact verify <spec-id>`.
  *
  * @param {string} specId
  */
@@ -33,7 +33,7 @@ export function verifyCommand(specId) {
   // ─── Guard: spec must exist ───────────────────────────────────────────────
   if (!existsSync(specFile)) {
     err(`No spec found at .sdd/specs/${specId}/spec.md`);
-    hint(`Run 'specforge list' to see available specs.`);
+    hint(`Run 'specpact list' to see available specs.`);
     process.exit(1);
   }
 
@@ -53,7 +53,7 @@ export function verifyCommand(specId) {
 
   // ─── Emit prompt to stdout ────────────────────────────────────────────────
   // Everything below goes to stdout. Diagnostic output above uses stderr via
-  // printer.js (console.error).  This means `specforge verify id | pbcopy`
+  // printer.js (console.error).  This means `specpact verify id | pbcopy`
   // captures only the prompt, not the error decorations.
 
   const lines = [];

@@ -1,5 +1,5 @@
 /**
- * update.js — specforge update <spec-id> [status]
+ * update.js — specpact update <spec-id> [status]
  *
  * Updates a spec's status field and sets `created` to today's date.
  * Full Node.js reimplementation of .sdd/scripts/update-spec.sh — no shell exec,
@@ -28,7 +28,7 @@ import {
 } from '../lib/specReader.js';
 
 /**
- * Handler for `specforge update <spec-id> [status]`.
+ * Handler for `specpact update <spec-id> [status]`.
  *
  * @param {string}           specId    - kebab-case spec identifier
  * @param {string|undefined} newStatus - optional new status value
@@ -42,7 +42,7 @@ export async function updateCommand(specId, newStatus) {
   // ─── Guard: spec must exist ───────────────────────────────────────────────
   if (!existsSync(specFile)) {
     err(`No spec found at .sdd/specs/${specId}/spec.md`);
-    hint("Run 'specforge list' to see available specs.");
+    hint("Run 'specpact list' to see available specs.");
     process.exit(1);
   }
 
@@ -131,7 +131,7 @@ export async function updateCommand(specId, newStatus) {
   if (newStatus === 'deprecated') {
     hint('Deprecated specs are never deleted — they remain as permanent records.');
   } else if (newStatus === 'stable') {
-    hint(`Spec is stable. Run 'specforge verify ${specId}' anytime to re-audit.`);
+    hint(`Spec is stable. Run 'specpact verify ${specId}' anytime to re-audit.`);
   } else if (newStatus === 'in-progress') {
     hint(`Spec is in progress. Load it into your AI tool when you are ready to implement.`);
     hint(`  Claude Code:  /spec-load ${specId}`);
