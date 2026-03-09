@@ -1,0 +1,32 @@
+{
+  "name": "specforge",
+  "version": "1.0.0",
+  "description": "Spec-Driven Development workflow tool — init, create, list, verify, and upgrade specs from the command line.",
+  "main": "src/index.js",
+  "bin": {
+    "specforge": "bin/specforge.js"
+  },
+  "scripts": {
+    "sync-templates": "node templates/sync-templates.js",
+    "prepublishOnly": "node templates/sync-templates.js"
+  },
+  "keywords": [
+    "spec",
+    "sdd",
+    "spec-driven-development",
+    "specforge",
+    "cli"
+  ],
+  "author": "eshmamatovobidjon",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "commander": "^12.1.0",
+    "inquirer": "^9.3.7",
+    "ora": "^8.1.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "type": "module"
+}
