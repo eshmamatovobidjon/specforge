@@ -30,7 +30,7 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname  = dirname(__filename);
+const __dirname = dirname(__filename);
 
 const TEMPLATES_DIR = join(__dirname, '..', '..', 'templates');
 const UPGRADE_SCOPE = ['scripts', 'modes'];
@@ -40,8 +40,8 @@ const CONTEXT_LINES = 3;
 
 export function buildUpgradePlan(projectRoot, bundledVersion) {
   const sddInstalled = join(projectRoot, '.sdd');
-  const sddBundled   = join(TEMPLATES_DIR, '.sdd');
-  const versionFile  = join(sddInstalled, '.specpact-version');
+  const sddBundled = join(TEMPLATES_DIR, '.sdd');
+  const versionFile = join(sddInstalled, '.specpact-version');
 
   const installedVersion = existsSync(versionFile)
     ? readFileSync(versionFile, 'utf8').trim()
@@ -50,30 +50,32 @@ export function buildUpgradePlan(projectRoot, bundledVersion) {
   const diffs = [];
 
   for (const scope of UPGRADE_SCOPE) {
-    const bundledDir   = join(sddBundled,   scope);
+    const bundledDir = join(sddBundled, scope);
     const installedDir = join(sddInstalled, scope);
 
-    const bundledFiles   = existsSync(bundledDir)   ? collectFiles(bundledDir,   bundledDir)   : [];
+    const bundledFiles = existsSync(bundledDir) ? collectFiles(bundledDir, bundledDir) : [];
     const installedFiles = existsSync(installedDir) ? collectFiles(installedDir, installedDir) : [];
 
-    const bundledSet   = new Set(bundledFiles.map(f => f.rel));
+    const bundledSet = new Set(bundledFiles.map(f => f.rel));
     const installedSet = new Set(installedFiles.map(f => f.rel));
 
     for (const { rel, abs: bundledAbs } of bundledFiles) {
       const installedAbs = join(installedDir, rel);
-      const relPath      = join(scope, rel);
+      const relPath = join(scope, rel);
 
       if (!installedSet.has(rel)) {
         diffs.push({ relPath, status: 'NEW', bundledPath: bundledAbs, installedPath: installedAbs, hunks: null });
       } else {
-        const bundledContent   = normalise(readFileSync(bundledAbs,   'utf8'));
+        const bundledContent = normalise(readFileSync(bundledAbs, 'utf8'));
         const installedContent = normalise(readFileSync(installedAbs, 'utf8'));
 
         if (bundledContent === installedContent) {
           diffs.push({ relPath, status: 'UNCHANGED', bundledPath: bundledAbs, installedPath: installedAbs, hunks: null });
         } else {
-          diffs.push({ relPath, status: 'MODIFIED',  bundledPath: bundledAbs, installedPath: installedAbs,
-                       hunks: computeHunks(installedContent, bundledContent) });
+          diffs.push({
+            relPath, status: 'MODIFIED', bundledPath: bundledAbs, installedPath: installedAbs,
+            hunks: computeHunks(installedContent, bundledContent)
+          });
         }
       }
     }
@@ -102,7 +104,7 @@ export function computeHunks(oldText, newText) {
   };
   const oldLines = splitLines(oldText);
   const newLines = splitLines(newText);
-  const editOps  = myersDiff(oldLines, newLines);
+  const editOps = myersDiff(oldLines, newLines);
   return editOps.length ? buildHunkGroups(editOps, oldLines, newLines) : [];
 }
 
@@ -112,7 +114,7 @@ function myersDiff(a, b) {
   const N = a.length, M = b.length, MAX = N + M;
   if (MAX === 0) return [];
 
-  const V     = new Array(2 * MAX + 2).fill(0);
+  const V = new Array(2 * MAX + 2).fill(0);
   const trace = [];
 
   outer: for (let d = 0; d <= MAX; d++) {
@@ -132,7 +134,7 @@ function myersDiff(a, b) {
   let x = a.length, y = b.length;
   for (let d = trace.length - 1; d >= 0; d--) {
     const Vd = trace[d];
-    const k  = x - y;
+    const k = x - y;
     const ki = k + MAX;
     const prevK = (k === -d || (k !== d && Vd[ki - 1] < Vd[ki + 1])) ? k + 1 : k - 1;
     const prevX = Vd[prevK + MAX];
@@ -143,7 +145,7 @@ function myersDiff(a, b) {
 
   // Convert path to operations
   const ops = [];
-  for (const { d, k, prevK, x, y, prevX, prevY } of path) {
+  for (const { d, k, prevK, x, prevX, prevY } of path) {
     if (d > 0) {
       if (prevK === k - 1) {
         // delete: right move from (prevX, prevY) to (prevX+1, prevY)
@@ -168,9 +170,9 @@ function myersDiff(a, b) {
 
 function buildHunkGroups(ops, oldLines, newLines) {
   const flat = ops.map(op => {
-    if (op.type === 'equal')  return { type: ' ', text: oldLines[op.oldIdx], oldIdx: op.oldIdx, newIdx: op.newIdx };
+    if (op.type === 'equal') return { type: ' ', text: oldLines[op.oldIdx], oldIdx: op.oldIdx, newIdx: op.newIdx };
     if (op.type === 'delete') return { type: '-', text: oldLines[op.oldIdx], oldIdx: op.oldIdx, newIdx: undefined };
-    return                           { type: '+', text: newLines[op.newIdx], oldIdx: undefined,  newIdx: op.newIdx };
+    return { type: '+', text: newLines[op.newIdx], oldIdx: undefined, newIdx: op.newIdx };
   });
 
   const changedIdx = flat.map((l, i) => l.type !== ' ' ? i : -1).filter(i => i !== -1);
@@ -193,11 +195,11 @@ function buildHunkGroups(ops, oldLines, newLines) {
   ranges.push([s, e]);
 
   return ranges.map(([start, end]) => {
-    const lines    = flat.slice(start, end + 1);
+    const lines = flat.slice(start, end + 1);
     const firstOld = lines.find(l => l.oldIdx !== undefined);
     const firstNew = lines.find(l => l.newIdx !== undefined);
     return {
-      startBundled:   (firstNew?.newIdx ?? 0) + 1,
+      startBundled: (firstNew?.newIdx ?? 0) + 1,
       startInstalled: (firstOld?.oldIdx ?? 0) + 1,
       lines: lines.map(l => ({ type: l.type, text: l.text })),
     };
@@ -209,7 +211,7 @@ function buildHunkGroups(ops, oldLines, newLines) {
 function collectFiles(dir, rootDir) {
   const results = [];
   for (const entry of readdirSync(dir)) {
-    const abs  = join(dir, entry);
+    const abs = join(dir, entry);
     const stat = statSync(abs);
     if (stat.isDirectory()) {
       results.push(...collectFiles(abs, rootDir));
