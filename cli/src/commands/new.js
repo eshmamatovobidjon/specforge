@@ -29,8 +29,8 @@ import { VALID_MODES, SPEC_ID_PATTERN, today } from '../lib/specReader.js';
  */
 export function newCommand(mode, specId) {
   const projectRoot = resolve(process.cwd());
-  const sddDir      = join(projectRoot, '.sdd');
-  const specsDir    = join(sddDir, 'specs');
+  const sddDir = join(projectRoot, '.sdd');
+  const specsDir = join(sddDir, 'specs');
   const templatesDir = join(sddDir, 'templates');
 
   // ─── 1. Validate mode ────────────────────────────────────────────────────
@@ -73,11 +73,13 @@ export function newCommand(mode, specId) {
   // ─── 6. Stamp spec.md from template ──────────────────────────────────────
   mkdirSync(specDir, { recursive: true });
 
-  const date       = today();
+  const date = today();
   const rawTemplate = readFileSync(templateFile, 'utf8');
   const stampedSpec = rawTemplate
     .replace(/YYYY-MM-DD/g, date)
-    .replace(/<spec-id>/g, specId);
+    .replace(/\[SPEC_DATE\]/g, date)
+    .replace(/<spec-id>/g, specId)
+    .replace(/\[SPEC_ID\]/g, specId);
 
   const specFile = join(specDir, 'spec.md');
   writeFileSync(specFile, stampedSpec, 'utf8');
@@ -85,10 +87,10 @@ export function newCommand(mode, specId) {
   // ─── 7. Create notes.md for feature / system modes ───────────────────────
   if (mode === 'feature' || mode === 'system') {
     const notesTemplateFile = join(templatesDir, 'notes.md');
-    const notesFile         = join(specDir, 'notes.md');
+    const notesFile = join(specDir, 'notes.md');
 
     if (existsSync(notesTemplateFile)) {
-      const rawNotes    = readFileSync(notesTemplateFile, 'utf8');
+      const rawNotes = readFileSync(notesTemplateFile, 'utf8');
       const stampedNotes = rawNotes.replace(/<spec-id>/g, specId);
       writeFileSync(notesFile, stampedNotes, 'utf8');
     } else {

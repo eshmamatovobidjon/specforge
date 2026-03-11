@@ -12,7 +12,9 @@
   ],
   "scripts": {
     "sync-templates": "node templates/sync-templates.js",
-    "prepublishOnly": "node templates/sync-templates.js"
+    "prepublishOnly": "node templates/sync-templates.js",
+    "lint": "eslint src/ bin/",
+    "test": "node --test tests/smoke.test.js"
   },
   "keywords": [
     "spec",
@@ -28,6 +30,10 @@
     "commander": "^12.1.0",
     "gray-matter": "^4.0.3",
     "inquirer": "^9.3.7"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.0.0",
+    "eslint": "^9.0.0"
   },
   "engines": {
     "node": ">=18.0.0"
